@@ -9,7 +9,7 @@ public class TestYException extends RuntimeException{
 	
 	public TestYException(String errorCode, String errorMessage) {
 		this.errorCode=errorCode;
-		this.errorCode=errorMessage;
+		this.errorMessage=errorMessage;
 	}
 
 	public String getErrorCode() {

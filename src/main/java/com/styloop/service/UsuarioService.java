@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.styloop.common.TestYException;
 import com.styloop.model.Usuario;
 import com.styloop.persistence.dao.UsuarioDao;
 
@@ -34,7 +35,7 @@ public class UsuarioService {
 		}
 		return usuario;
 	}
-	public void insertUsuario(Usuario usuario) throws Exception{
+	public void insertUsuario(Usuario usuario) throws TestYException{
 		usuarioDao.registerUser(usuario);
 	}
 }

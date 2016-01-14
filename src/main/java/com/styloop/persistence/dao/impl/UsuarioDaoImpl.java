@@ -9,6 +9,8 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.styloop.common.TestYConstants;
+import com.styloop.common.TestYException;
 import com.styloop.model.Usuario;
 import com.styloop.persistence.dao.UsuarioDao;
 
@@ -43,7 +45,12 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	
 	@Override
 	@Transactional
-	public void registerUser(Usuario usuario) throws Exception{
-		em.persist(usuario);
+	public void registerUser(Usuario usuario) throws TestYException{
+		try {
+			em.persist(usuario);	
+		} catch (Exception e) {
+			throw new TestYException(TestYConstants.ERROR_E01, e.getCause().getMessage());
+		}
+		
 	}
 }

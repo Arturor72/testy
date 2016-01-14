@@ -3,6 +3,7 @@ package com.styloop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.styloop.common.TestYError;
+import com.styloop.common.TestYException;
 import com.styloop.common.util.TestYUtil;
 import com.styloop.model.Usuario;
 import com.styloop.service.UsuarioService;
@@ -33,9 +36,25 @@ public class UserController {
 		userAsJson=TestYUtil.convertToJson(usuarioService.getUsuarioByUserAndPassword(username, password));
 		return userAsJson;
 	}
+	
 	@RequestMapping(value="/register", method=RequestMethod.POST, produces="application/json", consumes="application/json")
-	public void register(@RequestBody Usuario usuario) throws Exception{
-		usuarioService.insertUsuario(usuario);
+	public void register(@RequestBody Usuario usuario){
+		try {
+			usuarioService.insertUsuario(usuario);
+		} catch (TestYException e) {
+			throw e;
+		}
+		
+		
+	}
+	@ExceptionHandler(TestYException.class)
+	@RequestMapping(produces="application/json")
+	public String responseError(TestYException exception) throws Exception{
+		TestYError error=new TestYError();
+		error.setErroCode(exception.getErrorCode());
+		error.setErrorMessage(exception.getErrorMessage());
+		String erroAsJson=TestYUtil.convertToJson(error);
+		return erroAsJson;
 	}
 	
 }
