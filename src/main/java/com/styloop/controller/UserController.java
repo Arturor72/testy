@@ -37,4 +37,5 @@ public class UserController {
 	public void register(@RequestBody Usuario usuario) throws Exception{
 		usuarioService.insertUsuario(usuario);
 	}
+	
 }
