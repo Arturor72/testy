@@ -28,6 +28,10 @@ public class Especialidad {
 	@OneToMany(mappedBy="especialidad")
 	private List<Usuario> usuarios;
 	
+	@OneToMany(mappedBy="especialidad")
+	private List<EspecialidadCurso> especialidadCurso;
+	
+	
 	public Integer getEsp_id() {
 		return esp_id;
 	}
@@ -57,6 +61,12 @@ public class Especialidad {
 	}
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
+	}
+	public List<EspecialidadCurso> getEspecialidadCurso() {
+		return especialidadCurso;
+	}
+	public void setEspecialidadCurso(List<EspecialidadCurso> especialidadCurso) {
+		this.especialidadCurso = especialidadCurso;
 	}
 
 	
