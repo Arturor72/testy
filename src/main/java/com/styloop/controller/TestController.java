@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
-import com.styloop.model.Alumno;
 import com.styloop.model.Usuario;
 import com.styloop.service.UsuarioService;
 

@@ -10,6 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="Tema")
 public class Tema {
@@ -20,11 +23,14 @@ public class Tema {
 	private String tem_cod;
 	@Column(name="tem_des")
 	private String tem_des;
-	@ManyToOne
+	
+	@ManyToOne()
 	@JoinColumn(name="cur_id")
+	@JsonBackReference
 	private Curso curso;
 	
 	@OneToMany(mappedBy="tema")
+	@JsonManagedReference
 	private List<Pregunta> preguntas;
 	
 	

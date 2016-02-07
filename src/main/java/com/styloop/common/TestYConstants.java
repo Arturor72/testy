@@ -11,4 +11,6 @@ public class TestYConstants {
 	public static final String HIBERNATE_SHOW_SQL_PROPERTIE="hibernate.show_sql";
 	
 	public static final String ERROR_E01="E01";
+	
+	public static final Integer SIMULACRO_STATE_INIT=0;
 }

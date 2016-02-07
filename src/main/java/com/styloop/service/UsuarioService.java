@@ -18,7 +18,7 @@ public class UsuarioService {
 	public Usuario getUsuario(Integer id){
 		Usuario usuario=new Usuario();
 		List<Usuario> listUsuarios=usuarioDao.getUser(id);
-		if(!listUsuarios.isEmpty()&&listUsuarios.size()>0){
+		if(listUsuarios!=null&&!listUsuarios.isEmpty()&&listUsuarios.size()>0){
 			usuario=listUsuarios.get(0);
 		}else{
 			usuario=null;
@@ -28,7 +28,7 @@ public class UsuarioService {
 	public Usuario getUsuarioByUserAndPassword(String user, String password){
 		Usuario usuario=new Usuario();
 		List<Usuario> listUsuarios=usuarioDao.getUserByUserAndPassword(user, password);
-		if(!listUsuarios.isEmpty()&&listUsuarios.size()>0){
+		if(listUsuarios!=null&&!listUsuarios.isEmpty()&&listUsuarios.size()>0){
 			usuario=listUsuarios.get(0);
 		}else{
 			usuario=null;
@@ -37,5 +37,15 @@ public class UsuarioService {
 	}
 	public void insertUsuario(Usuario usuario) throws TestYException{
 		usuarioDao.registerUser(usuario);
+	}
+	public Usuario getUsuarioByUsername(String username){
+		Usuario usuario=new Usuario();
+		List<Usuario> listUsuarios=usuarioDao.getUserByUsername(username);
+		if(listUsuarios!=null&&!listUsuarios.isEmpty()&&listUsuarios.size()>0){
+			usuario=listUsuarios.get(0);
+		}else{
+			usuario=null;
+		}
+		return usuario;
 	}
 }

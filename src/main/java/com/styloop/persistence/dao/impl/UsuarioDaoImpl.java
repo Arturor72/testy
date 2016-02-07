@@ -43,13 +43,24 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		return prepareQuery.getResultList();
 	}
 	
+	
+	@Override
+	@Transactional(readOnly=true)
+	@SuppressWarnings("unchecked")
+	public List<Usuario> getUserByUsername(String username){
+		String query="Select u from Usuario u where u.usr_usr=:username";
+		Query prepareQuery=em.createQuery(query);
+		prepareQuery.setParameter("username", username);
+		return prepareQuery.getResultList();	
+	}
+	
 	@Override
 	@Transactional
 	public void registerUser(Usuario usuario) throws TestYException{
 		try {
 			em.persist(usuario);	
 		} catch (Exception e) {
-			throw new TestYException(TestYConstants.ERROR_E01, e.getCause().getMessage());
+			throw new TestYException(TestYConstants.ERROR_E01, e.getMessage());
 		}
 		
 	}

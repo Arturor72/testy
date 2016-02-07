@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -11,6 +12,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="Pregunta")
@@ -26,9 +30,11 @@ public class Pregunta {
 	private String pre_res;
 	@ManyToOne
 	@JoinColumn(name="tem_id")
+	@JsonBackReference
 	private Tema tema;
 	
-	@OneToMany(mappedBy="pregunta") 
+	@OneToMany(mappedBy="pregunta", fetch=FetchType.EAGER)
+	@JsonManagedReference
 	private List<Alternativa> alternativas;
 	
 	@ManyToMany

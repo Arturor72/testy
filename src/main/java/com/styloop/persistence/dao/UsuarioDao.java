@@ -9,4 +9,5 @@ public interface UsuarioDao {
 	public List<Usuario> getUser(Integer id);
 	public List<Usuario> getUserByUserAndPassword(String user, String password);
 	public void registerUser(Usuario usuario) throws TestYException;
+	public List<Usuario> getUserByUsername(String username);
 }

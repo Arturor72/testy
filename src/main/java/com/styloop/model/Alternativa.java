@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="Alternativa")
 public class Alternativa {
@@ -20,6 +22,7 @@ public class Alternativa {
 	
 	@ManyToOne
 	@JoinColumn(name="pre_id")
+	@JsonBackReference
 	private Pregunta pregunta;
 
 	public Integer getAlt_id() {

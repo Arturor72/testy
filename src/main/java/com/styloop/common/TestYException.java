@@ -6,7 +6,9 @@ public class TestYException extends RuntimeException{
 	
 	private String errorCode;
 	private String errorMessage;
-	
+	public TestYException(){
+		
+	}
 	public TestYException(String errorCode, String errorMessage) {
 		this.errorCode=errorCode;
 		this.errorMessage=errorMessage;

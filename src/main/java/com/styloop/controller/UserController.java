@@ -1,18 +1,18 @@
 package com.styloop.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.styloop.common.TestYError;
+import com.styloop.common.TestYConstants;
 import com.styloop.common.TestYException;
 import com.styloop.common.util.TestYUtil;
 import com.styloop.model.Usuario;
@@ -27,13 +27,39 @@ public class UserController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/login", method=RequestMethod.POST, produces="application/json",consumes="application/json")
-	public String login(@RequestBody String usuarioRequest) throws Exception{
-		ObjectMapper mapper=new ObjectMapper();
-		JsonNode jnode=mapper.readTree(usuarioRequest);
-		String username=jnode.get("user").asText();
-		String password=jnode.get("password").asText();
+	public String login(@RequestBody String usuarioRequest) throws TestYException{
 		String userAsJson="";
-		userAsJson=TestYUtil.convertToJson(usuarioService.getUsuarioByUserAndPassword(username, password));
+		try {
+			ObjectMapper mapper=new ObjectMapper();
+			JsonNode jnode=mapper.readTree(usuarioRequest);	
+			String username=jnode.get("usr_usr").asText();
+			String password=jnode.get("usr_pas").asText();
+			userAsJson=TestYUtil.convertToJson(usuarioService.getUsuarioByUserAndPassword(username, password));		
+		} catch (JsonProcessingException e) {
+			throw new TestYException(TestYConstants.ERROR_E01,e.getMessage());
+		} catch (IOException e) {
+			throw new TestYException(TestYConstants.ERROR_E01,e.getMessage());
+		} catch(NullPointerException e){
+			throw new TestYException(TestYConstants.ERROR_E01,"parameter not found");
+		}
+		return userAsJson;
+	}
+	
+	@RequestMapping(value="/verify", method=RequestMethod.POST, consumes="application/json", produces="application/json")
+	public String getUserByUsername(@RequestBody String usernameRequest){
+		String userAsJson="";
+		try {
+			ObjectMapper mapper=new ObjectMapper();
+			JsonNode jnode=mapper.readTree(usernameRequest);	
+			String username=jnode.get("usr_usr").asText();
+			userAsJson=TestYUtil.convertToJson(usuarioService.getUsuarioByUsername(username));		
+		} catch (JsonProcessingException e) {
+			throw new TestYException(TestYConstants.ERROR_E01,e.getMessage());
+		} catch (IOException e) {
+			throw new TestYException(TestYConstants.ERROR_E01,e.getMessage());
+		} catch(NullPointerException e){
+			throw new TestYException(TestYConstants.ERROR_E01,"parameter not found");
+		}
 		return userAsJson;
 	}
 	
@@ -44,17 +70,6 @@ public class UserController {
 		} catch (TestYException e) {
 			throw e;
 		}
-		
-		
-	}
-	@ExceptionHandler(TestYException.class)
-	@RequestMapping(produces="application/json")
-	public String responseError(TestYException exception) throws Exception{
-		TestYError error=new TestYError();
-		error.setErroCode(exception.getErrorCode());
-		error.setErrorMessage(exception.getErrorMessage());
-		String erroAsJson=TestYUtil.convertToJson(error);
-		return erroAsJson;
 	}
 	
 }
