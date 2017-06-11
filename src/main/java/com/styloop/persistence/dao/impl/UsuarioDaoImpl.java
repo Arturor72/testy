@@ -55,6 +55,16 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	}
 	
 	@Override
+	@Transactional(readOnly=true)
+	@SuppressWarnings("unchecked")
+	public List<Usuario> getUserByMail(String email) {
+		String query="Select u from Usuario u where u.usr_ema=:email";
+		Query prepareQuery=em.createQuery(query);
+		prepareQuery.setParameter("email", email);
+		return prepareQuery.getResultList();
+	}
+	
+	@Override
 	@Transactional
 	public void registerUser(Usuario usuario) throws TestYException{
 		try {

@@ -103,7 +103,7 @@ public class SimulacroConroller {
 		simulacro.setSim_hor(new Time(date.getTime()));
 		simulacro.setSim_hor(new Time(date.getTime()));
 		simulacro.setUsuario(usuario);
-		simulacro.setSim_cod("SIM_01");
+		simulacro.setSim_cod("SIM_02");
 		return simulacro;
 	}
 	

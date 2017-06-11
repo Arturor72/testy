@@ -30,6 +30,10 @@ public class Usuario {
 	private String usr_pas;
 	@Column(name="usr_cel")
 	private String usr_cel;
+	@Column(name="usr_url")
+	private String usr_url;
+	@Column(name="usr_src")
+	private String usr_src;
 	@Column(name="usr_upd")
 	private String usr_upd;
 	@Column(name="usr_est")
@@ -106,6 +110,18 @@ public class Usuario {
 	}
 	public void setUsr_est(String usr_est) {
 		this.usr_est = usr_est;
+	}
+	public String getUsr_url() {
+		return usr_url;
+	}
+	public void setUsr_url(String usr_url) {
+		this.usr_url = usr_url;
+	}
+	public String getUsr_src() {
+		return usr_src;
+	}
+	public void setUsr_src(String usr_src) {
+		this.usr_src = usr_src;
 	}
 	
 	

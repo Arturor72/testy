@@ -51,8 +51,19 @@ public class UserController {
 		try {
 			ObjectMapper mapper=new ObjectMapper();
 			JsonNode jnode=mapper.readTree(usernameRequest);	
-			String username=jnode.get("usr_usr").asText();
-			userAsJson=TestYUtil.convertToJson(usuarioService.getUsuarioByUsername(username));		
+			String username=null;
+			String usermail=null;
+			if(jnode.get("usr_usr")!=null){
+				username=jnode.get("usr_usr").asText();	
+			}else if(jnode.get("usr_ema")!=null){
+				usermail=jnode.get("usr_ema").asText();	
+			}
+			userAsJson=TestYUtil.convertToJson(usuarioService.getUsuario(username,usermail));
+			System.out.println(userAsJson);
+			if(userAsJson==null){
+				userAsJson="{\"result\":0}";
+			}
+			
 		} catch (JsonProcessingException e) {
 			throw new TestYException(TestYConstants.ERROR_E01,e.getMessage());
 		} catch (IOException e) {
@@ -64,12 +75,19 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/register", method=RequestMethod.POST, produces="application/json", consumes="application/json")
-	public void register(@RequestBody Usuario usuario){
+	public String register(@RequestBody Usuario usuario){
+		String result="{\"result\":0}";
 		try {
 			usuarioService.insertUsuario(usuario);
+			result="{\"result\":1}";
 		} catch (TestYException e) {
-			throw e;
+			throw new TestYException(TestYConstants.ERROR_CLIENT_01,TestYConstants.ERROR_CLIENT_01_TEXT);
 		}
+		return result;
 	}
 	
+	@RequestMapping(value="/hello", method=RequestMethod.GET)
+	public String hello(){
+		return "Hello WOrld";
+	}
 }
