@@ -49,6 +49,7 @@ public class UserController {
 	public String getUserByUsername(@RequestBody String usernameRequest){
 		String userAsJson="";
 		try {
+
 			ObjectMapper mapper=new ObjectMapper();
 			JsonNode jnode=mapper.readTree(usernameRequest);	
 			String username=null;
