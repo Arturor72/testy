@@ -20,7 +20,7 @@ public class TestController {
 	public @ResponseBody String getAlumno() throws Exception{
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.registerModule(new Hibernate4Module());
-		
+		System.out.println("XD");	
 		Usuario usuario=service.getUsuario(1);
 		String user=mapper.writeValueAsString(usuario);
 		return user;
